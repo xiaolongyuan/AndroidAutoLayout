@@ -1,18 +1,53 @@
 package com.zhy.autolayout.test.widgets;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
+import com.zhy.autolayout.AutoLayoutActivity;
+import com.zhy.autolayout.test.widgets.fragments.SimpleFragment;
+
+public class MainActivity extends AutoLayoutActivity
 {
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mTabLayout = (TabLayout) findViewById(R.id.id_tablayout);
+        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
+
+        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager())
+        {
+            @Override
+            public Fragment getItem(int position)
+            {
+                return new SimpleFragment();
+            }
+
+            @Override
+            public int getCount()
+            {
+                return 2;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position)
+            {
+                return "Page " + position;
+            }
+        });
+
+        mTabLayout.setupWithViewPager(mViewPager);
+
     }
 
     @Override
